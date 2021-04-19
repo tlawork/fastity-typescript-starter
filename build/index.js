@@ -41,31 +41,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var fastify_1 = require("fastify");
 var pino_1 = __importDefault(require("pino"));
+var Port = process.env.PORT || 7000;
 var server = fastify_1.fastify({
     logger: pino_1.default({ level: 'info' })
 });
-server.get('/ping', function (request, reply) { return __awaiter(void 0, void 0, void 0, function () {
+var start = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var address, err_1;
     return __generator(this, function (_a) {
-        server.log.info('log message');
-        return [2 /*return*/, 'pong\n'];
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, server.listen(Port)];
+            case 1:
+                _a.sent();
+                address = server.server.address();
+                console.log("Server listening at " + Port);
+                return [3 /*break*/, 3];
+            case 2:
+                err_1 = _a.sent();
+                server.log.error(err_1);
+                process.exit(1);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
     });
-}); });
-server.listen(8080, function (err, address) {
-    if (err) {
-        console.error(err);
-        process.exit(1);
-    }
-    console.log("Server listening at " + address);
-});
-// const start = async () => {
-// 	try {
-// 		await server.listen(3000);
-// 		const address = server.server.address();
-// 		// const port = typeof address === 'string' ? address : address?.port
-// 		console.log(`Server listening at ${address}`);
-// 	} catch (err) {
-// 		server.log.error(err);
-// 		process.exit(1);
-// 	}
-// };
-// start();
+}); };
+start();
