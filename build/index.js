@@ -39,10 +39,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var fastify_1 = require("fastify");
+var fastify_1 = __importDefault(require("fastify"));
 var pino_1 = __importDefault(require("pino"));
 var Port = process.env.PORT || 7000;
-var server = fastify_1.fastify({
+var server = fastify_1.default({
     logger: pino_1.default({ level: 'info' })
 });
 var start = function () { return __awaiter(void 0, void 0, void 0, function () {
@@ -55,7 +55,7 @@ var start = function () { return __awaiter(void 0, void 0, void 0, function () {
             case 1:
                 _a.sent();
                 address = server.server.address();
-                console.log("Server listening at " + Port);
+                console.log("Server listening at " + Port + "}");
                 return [3 /*break*/, 3];
             case 2:
                 err_1 = _a.sent();
@@ -67,3 +67,7 @@ var start = function () { return __awaiter(void 0, void 0, void 0, function () {
     });
 }); };
 start();
+// server.get('/ping', async (request, reply) => {
+//     server.log.info('log message');
+//     return 'pong\n';
+// });

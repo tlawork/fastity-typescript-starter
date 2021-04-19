@@ -1,9 +1,8 @@
-import { fastify, FastifyInstance } from 'fastify';
+import fastify from 'fastify';
 import pino from 'pino';
-import { Server, IncomingMessage, ServerResponse } from 'http';
 
 const Port = process.env.PORT || 7000;
-const server: FastifyInstance<Server, IncomingMessage, ServerResponse> = fastify({
+const server = fastify({
 	logger: pino({ level: 'info' })
 });
 
@@ -12,10 +11,15 @@ const start = async () => {
 		await server.listen(Port);
 
 		const address = server.server.address();
-		console.log(`Server listening at ${Port}`);
+		console.log(`Server listening at ${Port}}`);
 	} catch (err) {
 		server.log.error(err);
 		process.exit(1);
 	}
 };
 start();
+
+// server.get('/ping', async (request, reply) => {
+//     server.log.info('log message');
+//     return 'pong\n';
+// });
